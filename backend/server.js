@@ -14,7 +14,7 @@ app.use(cookie_parser())
 app.use("/api/user", require("./routes/authentication"))
 
 app.get('/', (req,res)=>{
-    res.status(200).json({data:"working fine"})
+    res.status(200).json({data:"working fine "})
 })
 
 // ----------------- App listenting--------------------
