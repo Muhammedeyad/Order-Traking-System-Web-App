@@ -13,6 +13,9 @@ app.use(cookie_parser())
 // ------------------App Routes ---------------
 app.use("/api/user", require("./routes/authentication"))
 
+app.get('/', (req,res)=>{
+    res.status(200).json({data:"working fine"})
+})
 
 // ----------------- App listenting--------------------
 app.listen(PORT, ()=>{
