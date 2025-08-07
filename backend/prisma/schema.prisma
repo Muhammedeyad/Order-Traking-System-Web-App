@@ -1,0 +1,154 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model address_master {
+  addressid    Int           @id @default(autoincrement())
+  userid       Int?
+  address      String?
+  city         String?       @db.VarChar(20)
+  state        String?       @db.VarChar(50)
+  pincode      BigInt?
+  country      String?       @db.VarChar(50)
+  isactive     String?       @db.Bit(1)
+  createdby    String?       @db.VarChar(50)
+  createddate  DateTime?     @default(now()) @db.Timestamp(6)
+  modifiedby   String?       @db.VarChar(50)
+  modifieddate DateTime?     @db.Timestamp(6)
+  users_master users_master? @relation(fields: [userid], references: [userid], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model cart_master {
+  cartid          Int              @id @default(autoincrement())
+  userid          Int?
+  productid       Int?
+  quantity        Int?
+  price           Decimal?         @db.Decimal(10, 2)
+  isactive        String?          @db.Bit(1)
+  createdby       String?          @db.VarChar(50)
+  createddate     DateTime?        @default(now()) @db.Timestamp(6)
+  modifiedby      String?          @db.VarChar(50)
+  modifieddate    DateTime?        @db.Timestamp(6)
+  products_master products_master? @relation(fields: [productid], references: [productid], onDelete: NoAction, onUpdate: NoAction)
+  users_master    users_master?    @relation(fields: [userid], references: [userid], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model category_master {
+  categoryid      Int               @id @default(autoincrement())
+  categoryname    String?           @db.VarChar(50)
+  isactive        String?           @db.Bit(1)
+  createdby       String?           @db.VarChar(30)
+  createddate     DateTime?         @default(now()) @db.Timestamp(6)
+  modifiedby      String?           @db.VarChar(30)
+  modifieddate    DateTime?         @db.Timestamp(6)
+  products_master products_master[]
+}
+
+model orderitems_master {
+  itemid          Int              @id @default(autoincrement())
+  orderid         Int?
+  productid       Int?
+  quantity        Int?
+  unitprice       Decimal?         @db.Decimal(10, 2)
+  isactive        String?          @db.Bit(1)
+  createdby       String?          @db.VarChar(50)
+  createddate     DateTime?        @default(now()) @db.Timestamp(6)
+  modifiedby      String?          @db.VarChar(50)
+  modifieddate    DateTime?        @db.Timestamp(6)
+  orders_master   orders_master?   @relation(fields: [orderid], references: [orderid], onDelete: NoAction, onUpdate: NoAction)
+  products_master products_master? @relation(fields: [productid], references: [productid], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model orders_master {
+  orderid           Int                 @id @default(autoincrement())
+  userid            Int?
+  statusid          Int?
+  orderdate         DateTime?           @default(now()) @db.Timestamp(6)
+  totalamount       Decimal?            @db.Decimal(10, 2)
+  isactive          String?             @db.Bit(1)
+  createdby         String?             @db.VarChar(50)
+  createddate       DateTime?           @default(now()) @db.Timestamp(6)
+  modifiedby        String?             @db.VarChar(50)
+  modifieddate      DateTime?           @db.Timestamp(6)
+  orderitems_master orderitems_master[]
+  status_master     status_master?      @relation(fields: [statusid], references: [statusid], onDelete: NoAction, onUpdate: NoAction)
+  users_master      users_master?       @relation(fields: [userid], references: [userid], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model products_master {
+  productid          Int                 @id @default(autoincrement())
+  categoryid         Int?
+  productname        String?             @db.VarChar(100)
+  price              Decimal?            @db.Decimal(10, 2)
+  productdescription String?             @db.VarChar(500)
+  image              String?
+  isactive           String?             @db.Bit(1)
+  createdby          String?             @db.VarChar(50)
+  createddate        DateTime?           @default(now()) @db.Timestamp(6)
+  modifiedby         String?             @db.VarChar(50)
+  modifieddate       DateTime?           @db.Timestamp(6)
+  cart_master        cart_master[]
+  orderitems_master  orderitems_master[]
+  category_master    category_master?    @relation(fields: [categoryid], references: [categoryid], onDelete: NoAction, onUpdate: NoAction)
+  wishlist_master    wishlist_master[]
+}
+
+model status_master {
+  statusid      Int             @id @default(autoincrement())
+  statusname    String?         @db.VarChar(30)
+  isactive      String?         @db.Bit(1)
+  createdby     String?         @db.VarChar(30)
+  createddate   DateTime?       @default(now()) @db.Timestamp(6)
+  modifieddate  String?         @db.VarChar(50)
+  modifiedby    DateTime?       @db.Timestamp(6)
+  orders_master orders_master[]
+}
+
+model users_master {
+  userid           Int               @id @default(autoincrement())
+  usertypeid       Int?
+  username         String?           @db.VarChar(50)
+  email            String?           @db.VarChar(50)
+  password         String?           @db.VarChar(50)
+  phoneno          BigInt?
+  createdby        String?           @db.VarChar(50)
+  createddate      DateTime?         @default(now()) @db.Timestamp(6)
+  modifiedby       String?           @db.VarChar(50)
+  modifieddate     DateTime?         @db.Timestamp(6)
+  isactive         Boolean?          @default(true)
+  address_master   address_master[]
+  cart_master      cart_master[]
+  orders_master    orders_master[]
+  usertypes_master usertypes_master? @relation(fields: [usertypeid], references: [usertypeid], onDelete: NoAction, onUpdate: NoAction)
+  wishlist_master  wishlist_master[]
+}
+
+model usertypes_master {
+  usertypeid   Int            @id @default(autoincrement())
+  usertype     String         @unique @db.VarChar(50)
+  isactive     String?        @db.Bit(1)
+  createdby    String?        @db.VarChar(50)
+  createddate  DateTime?      @default(now()) @db.Timestamp(6)
+  modifiedby   String?        @db.VarChar(50)
+  modifieddate DateTime?      @db.Timestamp(6)
+  users_master users_master[]
+}
+
+model wishlist_master {
+  wishlistid      Int              @id @default(autoincrement())
+  userid          Int?
+  productid       Int?
+  isactive        String?          @db.Bit(1)
+  createdby       String?          @db.VarChar(50)
+  createddate     DateTime?        @default(now()) @db.Timestamp(6)
+  modifiedby      String?          @db.VarChar(40)
+  modifieddate    DateTime?        @db.Timestamp(6)
+  products_master products_master? @relation(fields: [productid], references: [productid], onDelete: NoAction, onUpdate: NoAction)
+  users_master    users_master?    @relation(fields: [userid], references: [userid], onDelete: NoAction, onUpdate: NoAction)
+}
