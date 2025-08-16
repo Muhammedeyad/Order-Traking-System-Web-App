@@ -12,8 +12,8 @@ import RippleButton from '../ButtonComponent';
 
 export const Sidebar: React.FC = () => {
     return (
-        <div className='d-flex w-100'>
-            <div className="d-flex w-15 vh-100 flex-column bg-light  position-fixed top-0 left-0 w-100">
+        <div className='d-flex'>
+            <div className="d-flex w-15 vh-100 flex-column bg-light  position-fixed top-0 left-0 ">
                 <section className='px-4 pt-3 w-100'>
                     <h4 className="text-uppercase fw-bold text-info fs-5"># DashMin</h4>
                 </section>
