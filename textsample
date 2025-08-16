@@ -1,0 +1,19 @@
+<CTable>
+<CTableHead className='' color='info'>
+  <CTableRow >
+    <CTableHeaderCell className='' scope="col">#Order Id</CTableHeaderCell>
+    <CTableHeaderCell scope="col">Created</CTableHeaderCell>
+    <CTableHeaderCell scope="col">Shipping Address</CTableHeaderCell>
+    <CTableHeaderCell scope="col">Items</CTableHeaderCell>
+    <CTableHeaderCell scope="col">Price</CTableHeaderCell>
+    <CTableHeaderCell scope="col">Status</CTableHeaderCell>
+    <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+  </CTableRow>
+</CTableHead>
+<CTableBody className='p-3'>
+  <OrderItem />
+  <OrderItem />
+  <OrderItem />
+
+</CTableBody>
+</CTable>

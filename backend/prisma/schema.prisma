@@ -9,19 +9,20 @@ datasource db {
 }
 
 model address_master {
-  addressid    Int           @id @default(autoincrement())
-  userid       Int?
-  address      String?
-  city         String?       @db.VarChar(20)
-  state        String?       @db.VarChar(50)
-  pincode      BigInt?
-  country      String?       @db.VarChar(50)
-  isactive     String?       @db.Bit(1)
-  createdby    String?       @db.VarChar(50)
-  createddate  DateTime?     @default(now()) @db.Timestamp(6)
-  modifiedby   String?       @db.VarChar(50)
-  modifieddate DateTime?     @db.Timestamp(6)
-  users_master users_master? @relation(fields: [userid], references: [userid], onDelete: NoAction, onUpdate: NoAction)
+  addressid     Int             @id @default(autoincrement())
+  userid        Int?
+  address       String?
+  city          String?         @db.VarChar(20)
+  state         String?         @db.VarChar(50)
+  pincode       String?
+  country       String?         @db.VarChar(50)
+  isactive      String?         @default("1") @db.Bit(1)
+  createdby     String?         @db.VarChar(50)
+  createddate   DateTime?       @default(now()) @db.Timestamp(6)
+  modifiedby    String?         @db.VarChar(50)
+  modifieddate  DateTime?       @db.Timestamp(6)
+  users_master  users_master?   @relation(fields: [userid], references: [userid], onDelete: NoAction, onUpdate: NoAction)
+  orders_master orders_master[]
 }
 
 model cart_master {
@@ -42,7 +43,7 @@ model cart_master {
 model category_master {
   categoryid      Int               @id @default(autoincrement())
   categoryname    String?           @db.VarChar(50)
-  isactive        String?           @db.Bit(1)
+  isactive        String?           @default("1") @db.Bit(1)
   createdby       String?           @db.VarChar(30)
   createddate     DateTime?         @default(now()) @db.Timestamp(6)
   modifiedby      String?           @db.VarChar(30)
@@ -56,7 +57,7 @@ model orderitems_master {
   productid       Int?
   quantity        Int?
   unitprice       Decimal?         @db.Decimal(10, 2)
-  isactive        String?          @db.Bit(1)
+  isactive        String?          @default("1") @db.Bit(1)
   createdby       String?          @db.VarChar(50)
   createddate     DateTime?        @default(now()) @db.Timestamp(6)
   modifiedby      String?          @db.VarChar(50)
@@ -66,19 +67,23 @@ model orderitems_master {
 }
 
 model orders_master {
-  orderid           Int                 @id @default(autoincrement())
-  userid            Int?
-  statusid          Int?
-  orderdate         DateTime?           @default(now()) @db.Timestamp(6)
-  totalamount       Decimal?            @db.Decimal(10, 2)
-  isactive          String?             @db.Bit(1)
-  createdby         String?             @db.VarChar(50)
-  createddate       DateTime?           @default(now()) @db.Timestamp(6)
-  modifiedby        String?             @db.VarChar(50)
-  modifieddate      DateTime?           @db.Timestamp(6)
-  orderitems_master orderitems_master[]
-  status_master     status_master?      @relation(fields: [statusid], references: [statusid], onDelete: NoAction, onUpdate: NoAction)
-  users_master      users_master?       @relation(fields: [userid], references: [userid], onDelete: NoAction, onUpdate: NoAction)
+  orderid                                           Int                 @id @default(autoincrement())
+  userid                                            Int?
+  statusid                                          Int?                @default(1)
+  orderdate                                         DateTime?           @default(now()) @db.Date
+  totalamount                                       Decimal?            @db.Decimal(10, 2)
+  isactive                                          String?             @default("1") @db.Bit(1)
+  createdby                                         String?             @db.VarChar(50)
+  createddate                                       DateTime?           @default(now()) @db.Timestamp(6)
+  modifiedby                                        String?             @db.VarChar(50)
+  modifieddate                                      DateTime?           @db.Timestamp(6)
+  address_id                                        Int?
+  pickedby                                          Int?
+  orderitems_master                                 orderitems_master[]
+  address_master                                    address_master?     @relation(fields: [address_id], references: [addressid], onDelete: NoAction, onUpdate: NoAction, map: "address_fk")
+  users_master_orders_master_pickedbyTousers_master users_master?       @relation("orders_master_pickedbyTousers_master", fields: [pickedby], references: [userid], onDelete: NoAction, onUpdate: NoAction)
+  status_master                                     status_master?      @relation(fields: [statusid], references: [statusid], onDelete: NoAction, onUpdate: NoAction)
+  users_master                                      users_master?       @relation(fields: [userid], references: [userid], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model products_master {
@@ -88,7 +93,7 @@ model products_master {
   price              Decimal?            @db.Decimal(10, 2)
   productdescription String?             @db.VarChar(500)
   image              String?
-  isactive           String?             @db.Bit(1)
+  isactive           String?             @default("1") @db.Bit(1)
   createdby          String?             @db.VarChar(50)
   createddate        DateTime?           @default(now()) @db.Timestamp(6)
   modifiedby         String?             @db.VarChar(50)
@@ -102,7 +107,7 @@ model products_master {
 model status_master {
   statusid      Int             @id @default(autoincrement())
   statusname    String?         @db.VarChar(30)
-  isactive      String?         @db.Bit(1)
+  isactive      String?         @default("1") @db.Bit(1)
   createdby     String?         @db.VarChar(30)
   createddate   DateTime?       @default(now()) @db.Timestamp(6)
   modifieddate  String?         @db.VarChar(50)
@@ -111,22 +116,23 @@ model status_master {
 }
 
 model users_master {
-  userid           Int               @id @default(autoincrement())
-  usertypeid       Int?
-  username         String?           @db.VarChar(50)
-  email            String?           @db.VarChar(50)
-  password         String?           @db.VarChar(50)
-  phoneno          BigInt?
-  createdby        String?           @db.VarChar(50)
-  createddate      DateTime?         @default(now()) @db.Timestamp(6)
-  modifiedby       String?           @db.VarChar(50)
-  modifieddate     DateTime?         @db.Timestamp(6)
-  isactive         Boolean?          @default(true)
-  address_master   address_master[]
-  cart_master      cart_master[]
-  orders_master    orders_master[]
-  usertypes_master usertypes_master? @relation(fields: [usertypeid], references: [usertypeid], onDelete: NoAction, onUpdate: NoAction)
-  wishlist_master  wishlist_master[]
+  userid                                             Int               @id @default(autoincrement())
+  usertypeid                                         Int?              @default(3)
+  username                                           String?           @db.VarChar(50)
+  email                                              String?           @db.VarChar(50)
+  createdby                                          String?           @db.VarChar(50)
+  createddate                                        DateTime?         @default(now()) @db.Timestamp(6)
+  modifiedby                                         String?           @db.VarChar(50)
+  modifieddate                                       DateTime?         @db.Timestamp(6)
+  isactive                                           String?           @default("1") @db.Bit(1)
+  password                                           String?           @default("3934934KSFGFG") @db.VarChar(200)
+  phoneno                                            String?
+  address_master                                     address_master[]
+  cart_master                                        cart_master[]
+  orders_master_orders_master_pickedbyTousers_master orders_master[]   @relation("orders_master_pickedbyTousers_master")
+  orders_master                                      orders_master[]
+  usertypes_master                                   usertypes_master? @relation(fields: [usertypeid], references: [usertypeid], onDelete: NoAction, onUpdate: NoAction)
+  wishlist_master                                    wishlist_master[]
 }
 
 model usertypes_master {

@@ -1,0 +1,131 @@
+
+
+
+body{
+    padding: 0;
+    margin:0;
+    box-sizing: border-box;
+}
+
+.w-15 {
+    width: 16%;
+}
+.py-2-5{
+  padding: 0.9rem 0;
+}
+.fs-14{
+    font-size: 14px;
+}
+.bg-lightgray{
+    background-color: rgb(250, 250, 250);
+}
+.text-lightblue{
+    color: #009CFF
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
+.fs-16{
+    font-size: 16px;
+}
+
+/* input styilg */
+
+.underline{
+  text-decoration: underline;
+}
+.outline-none{
+    outline: none;
+}
+
+p, h4{
+    margin: 0;
+}
+.decoration-none{
+  text-decoration: none;
+}
+
+.w-10{
+  width: 10%;
+}
+.w-12{
+  width: 22%;
+}
+/*0---------------------------RIPPLE BUTTON---------------- */
+/* Ripple effect styling */
+
+.bg-lightblue{
+    background-color: skyblue;
+}
+.bg-lightblue:hover{
+    background-color: rgb(104, 166, 191);
+}
+.ripple-button {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    background-color: rgba(160, 160, 160, 0.6);
+    animation: ripple-animation 0.9s linear;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  @keyframes ripple-animation {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+  .btn {
+    position: relative;
+    overflow: hidden;
+  }
+  .p-2-5{
+    padding: 0.6rem 0;
+  }
+    
+  .overflow-hidden{
+    overflow: hidden;
+  }
+  .fs-16{
+    font-size: 16px;
+  }
+
+  .border-b-1{
+    border: 3rem solid gray
+  }
+
+
+
+
+
+  /* ---------------admin sidebar */
+  .sidebar-dark .nav-link {
+    color: #fff !important;
+  }
+  .sidebar-dark .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+
+
+
+  /* -------------------table center styles */
+  .admin-orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center; /* Horizontal centering */
+  }
+  
+  .admin-orders-table th,
+  .admin-orders-table td {
+    text-align: center;  /* Center horizontally */
+    vertical-align: middle; /* Center vertically */
+  }
+  

@@ -1,18 +1,22 @@
-import { Route, Routes } from 'react-router-dom'
-import './App.css'
-import AgentDashboard from './Screens/Agent/AgentDashboard'
-import { Login } from './Screens/Login'
+
+// import './App.css'
+import { useState } from 'react'
+import { AgentRoutes } from './routes/AgentRoutes'
+import { CustomerRoutes } from './routes/CustomerRoutes'
+import { AdminRoutes } from './routes/AdminRoutes'
+
 
 function App() {
 
+  const [userType, setUserType] = useState<number>(0)
 
   return (
     <>
       <div className='bg-white h-100 w-100  '>
-        <Routes>
-          <Route path='agent/dashboard' element={<AgentDashboard />} />
-          <Route path='/login' element={<Login/>}/>
-        </Routes>
+        <CustomerRoutes/>
+        <AgentRoutes/>
+        <AdminRoutes/>  
+    
       </div>
     </>
   )

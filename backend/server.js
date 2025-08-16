@@ -11,7 +11,18 @@ app.use(express.json())
 app.use(cookie_parser())
 
 // ------------------App Routes ---------------
+// ----------------COMMON ROUTES
+app.use('/api/user', require("./routes/AddingAddressRoute"))
+// ----------------CUSTOMER ROUTES
 app.use("/api/user", require("./routes/authentication"))
+app.use("/api/customer", require('./routes/CustomerRoutes/CustomerRoutes'))
+// ----------------ADMIN ROUTES
+app.use("/api/admin", require('./routes/AdminRoutes/AdminRoutes'))
+app.use("/api/orders", require('./routes/fetchOrdersRoute'))
+// ----------------AGENT ROUTES
+app.use("/api/agent", require('./routes/AgentRoutes/agentRoutes'))
+
+
 
 app.get('/', (req,res)=>{
     res.status(200).json({data:"working fine "})

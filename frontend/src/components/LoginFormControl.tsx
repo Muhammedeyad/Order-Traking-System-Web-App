@@ -1,22 +1,21 @@
 import React from 'react'
+import RippleButton from './ButtonComponent'
 
 export const LoginFormControl: React.FC = () => {
 	return (
-		<div className='w-50 px-4  py-5 fs-14 d-flex flex-column justify-content-center'>
-			<div className="mb-3">
-				<h1 className="form-label fs-14">Email address</h1>
-				<input type="email" className="form-control fs-14 py-2" id="exampleFormControlInput1" placeholder="name@example.com" />
+		<div className='w-50 px-4  py-5 d-flex flex-column '>
+			<h1 className='fs-2 py-4 text-info '>OTS SIGN IN</h1>
+			<div className='d-flex flex-column gap-3'>
+				<div className='d-flex flex-column gap-1'>
+					<label htmlFor="text-secondary fs-14">Enter Your Username</label>
+					<input type="text" className='px-2 py-2 border-2 border-info' placeholder='charlie@gmail.com' />
+				</div>
+				<div className='d-flex flex-column gap-1'>
+					<label htmlFor="text-secondary fs-14">Enter Your Password</label>
+					<input type="text" className='px-2 py-2 border-2 border-info' placeholder='charlie1234@gmail.com' />
+				</div>
 			</div>
-			<div className="mb-3">
-			<h1 className="form-label fs-14">Password</h1>
-				<input type="password" className="form-control fs-14 py-2" id="exampleFormControlInput1" placeholder="password" />
-			</div>
-			<button className='mt-3 px-3 py-2 w-50 border-0 bg-primary  text-white fs-14 btn btn-primary '>Sign In</button>
-			<p className='fs-14 mt-2 text-primary'>Already Have an Account! Register</p>
-			<div className='mt-4'>
-				<button className='btn btn-primary fs-14 w-100 bg-success border-0 text-white px-2 py-2'>Sign in with FaceBook</button>
-			</div>
-
+			<RippleButton className='bg-info text-white rounded-0 text-uppercase mt-5 py-2'>Sign IN</RippleButton>
 		</div>
 	)
 }
