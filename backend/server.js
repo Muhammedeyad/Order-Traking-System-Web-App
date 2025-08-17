@@ -10,24 +10,27 @@ const path = require('path')
 const NoRouteFound = require('./middleware/NoRouteFound')
 const ErrorHandling = require('./middleware/ErrorHandling')
 const ratelimiter= require('express-rate-limit')
+const cors = require('cors')
 
 //-----------------------limit the ip request for each site
 const limiter = ratelimiter({
     fnwindow: 15 * 60 * 1000,
-    max: 1
+    max: 100
 })
 
-app.get("/", (req, res)=>{
-    throw new Error('not good')
-})
 
-// -------------------Allowing App to make request
+
+// -------------------inbuilt and custom middleware...
 app.use(express.json())
 app.use(cookie_parser())
 app.use(express.static(path.join(__dirname, "..", "uploads")))
-app.use(NoRouteFound)
+// app.use(NoRouteFound)
 app.use(ErrorHandling)
 app.use(limiter)
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+}))
 
 // ------------------App Routes ---------------
 // ----------------COMMON ROUTES
@@ -46,7 +49,7 @@ app.use("/api/agent", require('./routes/AgentRoutes/agentRoutes'))
 
 app.post('/upload', multerupload.single('image'), (req, res)=>{
     console.log(req.file)
-    res.send('fine')
+    res.send('uploaded')
 })
 app.get("/get/:pathname", (req, res)=>{
     const filename = req.params.pathname

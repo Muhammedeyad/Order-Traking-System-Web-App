@@ -6,15 +6,23 @@ import App from './App';
 import './index.css'
 // import './index.css'; // or whatever your Tailwind CSS file is
 import { BrowserRouter } from 'react-router-dom';
+import AuthContextProvider from './context/UserContext/UserContext';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ToastContainer } from 'react-toastify';
 
 
+const queryClient = new QueryClient()
 
-// import bootstrap from 'bootstrap'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <AuthContextProvider>
+        <QueryClientProvider client={queryClient}>
+          <App />
+          <ToastContainer/>
+        </QueryClientProvider>
+      </AuthContextProvider>
     </BrowserRouter>
   </StrictMode>
 )

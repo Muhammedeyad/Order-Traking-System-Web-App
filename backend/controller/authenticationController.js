@@ -58,12 +58,12 @@ const authRegister = async (req, res) => {
                     phoneno: phoneNumber
                 }
             })
-            return res.status(401).json({ data: newUser, status: "success" })
+            return res.status(201).json({ data: newUser, status: "success" })
         } 
-        return res.status(200).json({ error: "User Already Exists!", status: "failed" })
+        return res.status(400).json({ error: "User Already Exists!", status: "failed" })
     } catch (err) {
         console.log(err.message, " error occured in authRegister")
-        res.status(400).json(err.message)
+        res.status(401).json(err.message)
     }
 }
 

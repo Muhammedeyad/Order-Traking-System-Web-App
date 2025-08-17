@@ -4,7 +4,7 @@ import { useLocation, useParams } from 'react-router-dom'
 
 export const OrderDetail:React.FC = () => {
   const {oid}= useParams()
-  console.log(oid)
+  // console.log(oid)
   
   return (
     <div className='w-100 d-flex justify-content-center'>

@@ -48,6 +48,7 @@ model category_master {
   createddate     DateTime?         @default(now()) @db.Timestamp(6)
   modifiedby      String?           @db.VarChar(30)
   modifieddate    DateTime?         @db.Timestamp(6)
+  categoryImage   String?
   products_master products_master[]
 }
 
